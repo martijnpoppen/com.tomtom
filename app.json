@@ -171,27 +171,6 @@
       "insights": false,
       "uiComponent": "sensor",
       "icon": "assets/icons/check-square.svg"
-      "$flow": {
-        "triggers": [
-          {
-            "id": "measure_available_changed",
-            "title": {
-              "en": "Availability has changed",
-              "nl": "Beschikbaarheid is veranderd"
-            },
-            "tokens": [
-              {
-                "name": "measure_available",
-                "title": {
-                  "en": "Is Available",
-                  "nl": "Is Beschikbaar"
-                },
-                "type": "boolean"
-              }
-            ]
-          }
-        ]
-      }
     },
     "measure_amount_available": {
         "type": "number",
@@ -207,7 +186,7 @@
             "en": "Available",
             "nl": "Vrij"
         },
-        "icon": "assets/icons/lightning-charge.svg",
+        "icon": "assets/icons/lightning-charge.svg"
       },
       "measure_occupied": {
         "type": "number",
