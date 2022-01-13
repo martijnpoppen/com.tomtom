@@ -9,7 +9,7 @@ module.exports = class mainDevice extends Homey.Device {
             this.setUnavailable(`Initializing ${this.getName()}`);
 
             await this.checkCapabilities();
-            await this.setTomTomClient();
+            await this.setTomTomClient(true);
 
             await this.setAvailable();
         } catch (error) {
@@ -27,12 +27,12 @@ module.exports = class mainDevice extends Homey.Device {
                 this.clearIntervals();
             }
 
-            await this.setTomTomClient(newSettings);
+            await this.setTomTomClient(false, newSettings);
         }
     }
 
     // ------------- API -------------
-    async setTomTomClient(overrideSettings = null) {
+    async setTomTomClient(firstCall, overrideSettings = null) {
         const settings = overrideSettings ? overrideSettings : this.getSettings();
 
         try {
@@ -40,7 +40,7 @@ module.exports = class mainDevice extends Homey.Device {
 
             this._TomTomClient = await new TomTom({ ...settings });
 
-            await this.setCapabilityValues(true);
+            await this.setCapabilityValues(firstCall);
             await this.setAvailable();
             await this.setCapabilityValuesInterval(settings.update_interval);
         } catch (error) {
@@ -157,8 +157,8 @@ module.exports = class mainDevice extends Homey.Device {
                     await this.addCapability(`measure_amount_available.${powerKW}.${rename(connector.type)}`);
                     await this.setCapabilityOptions(`measure_amount_available.${powerKW}.${rename(connector.type)}`, {
                         title: {
-                            en: `Aantal (${rename(connector.type)}) - ${powerKW}KW`,
-                            nl: `Aantal (${rename(connector.type)}) - ${powerKW}KW`
+                            en: `Vrij (${rename(connector.type)}) - ${powerKW}KW`,
+                            nl: `Vrij (${rename(connector.type)}) - ${powerKW}KW`
                         }
                     });
 
