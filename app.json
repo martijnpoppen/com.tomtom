@@ -3,9 +3,7 @@
   "version": "1.0.0",
   "compatibility": ">=5.0.0",
   "sdk": 3,
-  "platforms": [
-    "local"
-  ],
+  "platforms": ["local"],
   "brandColor": "#000000",
   "name": {
     "en": "TomTom EV Service",
@@ -18,9 +16,7 @@
   "tags": {
     "en": []
   },
-  "category": [
-    "localization"
-  ],
+  "category": ["localization"],
   "images": {
     "large": "/assets/images/large.jpg",
     "small": "/assets/images/small.jpg"
@@ -53,21 +49,17 @@
     }
   },
   "bugs": {
-    "url": "https://community.homey.app/t//app-pro-tomtom-ev-service/58383"
+    "url": "https://community.homey.app/t/app-pro-tomtom-ev-service/58383"
   },
   "source": "https://github.com/martijnpoppen/com.tomtom",
   "homeyCommunityTopicId": 58383,
-  "support": "https://community.homey.app/t//app-pro-tomtom-ev-service/58383",
+  "support": "https://community.homey.app/t/app-pro-tomtom-ev-service/58383",
   "drivers": [
     {
       "id": "charging_availability",
       "class": "other",
-      "connectivity": [
-        "cloud"
-      ],
-      "platforms": [
-        "local"
-      ],
+      "connectivity": ["cloud"],
+      "platforms": ["local"],
       "capabilities": [],
       "name": {
         "en": "Chargepoint",
@@ -177,7 +169,7 @@
     }
   ],
   "capabilities": {
-    "measure_available": {
+    "get_available": {
       "type": "boolean",
       "title": {
         "en": "Available",
@@ -219,6 +211,22 @@
       "units": {
         "en": "Occupied",
         "nl": "Bezet"
+      }
+    },
+    "measure_kwh": {
+      "type": "number",
+      "title": {
+        "en": "KWH",
+        "nl": "KWH"
+      },
+      "getable": true,
+      "setable": false,
+      "insights": false,
+      "uiComponent": "sensor",
+      "icon": "assets/icons/battery-charging.svg",
+      "units": {
+        "en": "KWH",
+        "nl": "KWH"
       }
     }
   }

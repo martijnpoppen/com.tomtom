@@ -68,12 +68,17 @@ module.exports = class mainDevice extends Homey.Device {
             for(const connector of connectors) {
                 const { availability } = connector;
                 const { current } = availability;
-
-                this.homey.app.log(`[Device] ${this.getName()} - ${connector.type} | ${chargingAvailability} - connector =>`, connector);
+                const { perPowerLevel } = availability;
+                const [power] = perPowerLevel
+                
                 if(settings.connectors.includes(connector.type)) {
-                    await this.setCapabilityValue(`measure_available.${connector.type}`, !!parseInt(current.available));
+                    this.homey.app.log(`[Device] ${this.getName()} - ${connector.type} | ${chargingAvailability} - connector =>`, connector);
+                    this.homey.app.log(`[Device] ${this.getName()} - ${connector.type} | ${chargingAvailability} - perPowerLevel =>`, perPowerLevel);    
+
+                    await this.setCapabilityValue(`get_available.${connector.type}`, !!parseInt(current.available));
                     await this.setCapabilityValue(`measure_amount_available.${connector.type}`, parseInt(current.available));
                     await this.setCapabilityValue(`measure_occupied.${connector.type}`, parseInt(current.occupied) || 0);
+                    await this.setCapabilityValue(`measure_kwh.${connector.type}`, power.powerKW || 0);
                 }
             }
         } catch (error) {
@@ -149,9 +154,9 @@ module.exports = class mainDevice extends Homey.Device {
                     await sleep(1000);
                 }
 
-                if (!this.hasCapability(`measure_available.${connector.type}`)) {
-                    await this.addCapability(`measure_available.${connector.type}`);
-                    await this.setCapabilityOptions(`measure_available.${connector.type}`, {
+                if (!this.hasCapability(`get_available.${connector.type}`)) {
+                    await this.addCapability(`get_available.${connector.type}`);
+                    await this.setCapabilityOptions(`get_available.${connector.type}`, {
                         title: {
                             en: `Vrij (${connector.type})`,
                             nl: `Vrij (${connector.type})`
@@ -166,6 +171,17 @@ module.exports = class mainDevice extends Homey.Device {
                         title: {
                             en: `Occupied (${connector.type})`,
                             nl: `Bezet (${connector.type})`
+                        }
+                    });
+                    await sleep(1000);
+                }
+
+                if (!this.hasCapability(`measure_kwh.${connector.type}`)) {
+                    await this.addCapability(`measure_kwh.${connector.type}`);
+                    await this.setCapabilityOptions(`measure_kwh.${connector.type}`, {
+                        title: {
+                            en: `KWH (${connector.type})`,
+                            nl: `KWH (${connector.type})`
                         }
                     });
                     await sleep(1000);
