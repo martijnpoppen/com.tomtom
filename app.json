@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "compatibility": ">=5.0.0",
   "sdk": 3,
-  "platforms": ["localization"],
+  "platforms": ["local"],
   "brandColor": "#000000",
   "name": {
     "en": "TomTom EV Service",
@@ -16,7 +16,7 @@
   "tags": {
     "en": []
   },
-  "category": ["appliances"],
+  "category": ["localization"],
   "images": {
     "large": "/assets/images/large.jpg",
     "small": "/assets/images/small.jpg"
