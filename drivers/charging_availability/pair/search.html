@@ -1,0 +1,81 @@
+<div class="hy-view visible" data-id="search_tomtom" data-template-id="search_tomtom">
+    <div class="hy-tmpl-search_tomtom" id="search_tomtom">
+        <style type="text/css">
+            .hy-tmpl-search_tomtom {
+                height: 100%;
+                display: flex;
+                flex-direction: column;
+                align-items: center
+            }
+
+            .hy-tmpl-search_tomtom-form {
+                position: relative;
+                width: 100%
+            }
+
+            .hy-tmpl-search_tomtom-logo {
+                display: block;
+                position: relative;
+                width: 90vw;
+                height: 25vw;
+                margin: 20vw auto;
+                background-position: center center;
+                background-repeat: no-repeat;
+                background-size: contain
+            }
+
+            .hy-tmpl-search_tomtom-row {
+                margin-bottom: 1em
+            }
+
+            .hidden {
+                display: none;
+            }
+        </style>
+
+<form class="hy-tmpl-search_tomtom-form" action="/" method="post">
+    <div class="hy-tmpl-search_tomtom-logo" style="background-image: url('./logo.png');"></div>
+    <span data-i18n="pair.search_instructions"></span><br><br>
+    <div class="hy-tmpl-search_tomtom-row row">
+        <label class="hy-label hy-tmpl-search_tomtom-label" for="search" data-i18n="pair.search"></label>
+        <input class="hy-input-text" name="search" type="text" value="" placeholder="">
+    </div>
+
+    <div class="hy-tmpl-search_tomtom-row row">
+        <input class="hy-button hy-button-primary hy-button-fill hy-tmpl-search_tomtom-submit button" type="submit"
+            value="">
+    </div>
+</form>
+<script type="text/javascript">!function () {
+    var e = document.getElementById("search_tomtom"),
+        o = e.querySelector(".hy-tmpl-search_tomtom-form"),
+        r = e.querySelector(".hy-tmpl-search_tomtom-logo"),
+        l = e.querySelector('input[name="search"]'),
+        lgn = e.querySelector('input[type="submit"]'),
+        m = !1; 
+        Homey.setTitle(Homey.__("$tmpl.login_credentials.title")),
+        lgn.value = Homey.__("pair.search_submit");
+        o.addEventListener("submit", function (e) { 
+            if (e.preventDefault(), !m) { 
+                m = !0, 
+                Homey.showLoadingOverlay(Homey.__("$tmpl.login_credentials.loading")); 
+                var z = l.value;
+
+                console.log(z);
+
+                return Homey.emit("lookup", { search: z }, function (e, o) { 
+                    if(e) {
+                        Homey.error(e)
+                    } else if(z) {
+                        Homey.nextView()
+                    } else {
+                        Homey.error(Homey.__("$tmpl.login_credentials.invalid_credentials"))
+                    }
+
+                    m = !1;
+                    Homey.hideLoadingOverlay();
+                })
+            }
+        });
+    }()
+</script>

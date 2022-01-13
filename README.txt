@@ -1,4 +1,4 @@
-## Control your Balboa Spa with this app.
+Control your Balboa Spa with this app.
 
 **Current features:**
 - Get spa status

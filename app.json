@@ -1,0 +1,229 @@
+{
+  "id": "com.tomtom",
+  "version": "0.0.1",
+  "compatibility": ">=5.0.0",
+  "sdk": 3,
+  "platforms": ["localization"],
+  "brandColor": "#000000",
+  "name": {
+    "en": "TomTom EV Service",
+    "nl": "TomTom EV Service"
+  },
+  "description": {
+    "en": "Real-time charging station availability",
+    "nl": "Beschikbaarheid van oplaadstations in real time"
+  },
+  "tags": {
+    "en": []
+  },
+  "category": ["appliances"],
+  "images": {
+    "large": "/assets/images/large.jpg",
+    "small": "/assets/images/small.jpg"
+  },
+  "author": {
+    "name": "Martijn Poppen",
+    "email": "tomtom@martijnpoppen.nl"
+  },
+  "contributors": {
+    "developers": [
+      {
+        "name": "Martijn Poppen",
+        "email": "tomtom@martijnpoppen.nl"
+      }
+    ],
+    "translators": [
+      {
+        "name": "🇬🇧 Martijn Poppen"
+      },
+      {
+        "name": "🇳🇱 Martijn Poppen"
+      }
+    ]
+  },
+  "contributing": {
+    "donate": {
+      "paypal": {
+        "username": "martijnpoppen"
+      }
+    }
+  },
+  "bugs": {
+    "url": "https://community.homey.app/t/app-pro-controlmyspa/57870"
+  },
+  "source": "https://github.com/martijnpoppen/com.balboa",
+  "homeyCommunityTopicId": 57870,
+  "support": "https://community.homey.app/t/app-pro-controlmyspa/57870",
+  "drivers": [
+    {
+      "id": "charging_availability",
+      "class": "other",
+      "connectivity": ["cloud"],
+      "platforms": ["local"],
+      "capabilities": [],
+      "name": {
+        "en": "Chargepoint",
+        "nl": "Laadpaal"
+      },
+      "images": {
+        "large": "drivers/charging_availability/assets/images/large.jpg",
+        "small": "drivers/charging_availability/assets/images/small.jpg"
+      },
+      "pair": [
+        {
+          "id": "login"
+        },
+        {
+          "id": "search",
+          "navigation": {
+            "prev": "login"
+          }
+        },
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "navigation": {
+            "prev": "search",
+            "next": "add_devices"
+          },
+          "options": {
+            "singular": true
+          }
+        },
+        {
+          "id": "add_devices",
+          "template": "add_devices"
+        }
+      ],
+      "settings": [
+        {
+          "type": "group",
+          "label": {
+            "en": "General settings",
+            "nl": "Algemene instellingen"
+          },
+          "children": [
+            {
+              "id": "update_interval",
+              "type": "number",
+              "label": {
+                "en": "Update interval",
+                "nl": "Update interval"
+              },
+              "min": 30,
+              "max": 3600,
+              "units": {
+                "en": "seconds",
+                "nl": "seconden"
+              },
+              "value": 120
+            }
+          ]
+        },
+        {
+          "type": "group",
+          "label": {
+            "en": "Login settings",
+            "nl": "Login instellingen"
+          },
+          "children": [
+            {
+              "id": "apikey",
+              "type": "text",
+              "label": {
+                "en": "API KEY",
+                "nl": "API KEY"
+              },
+              "value": ""
+            },
+            {
+              "id": "chargingAvailability",
+              "type": "text",
+              "label": {
+                "en": "chargingAvailability ID",
+                "nl": "chargingAvailability ID"
+              },
+              "value": ""
+            },
+            {
+              "id": "search",
+              "type": "label",
+              "label": {
+                "en": "Searched address",
+                "nl": "Gezocht adres"
+              },
+              "value": ""
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "capabilities": {
+    "measure_available": {
+      "type": "boolean",
+      "title": {
+        "en": "Available",
+        "nl": "Beschikbaar"
+      },
+      "getable": true,
+      "setable": false,
+      "insights": false,
+      "uiComponent": "sensor",
+      "icon": "assets/icons/lightning-charge.svg",
+      "$flow": {
+        "triggers": [
+          {
+            "id": "measure_available_changed",
+            "title": {
+              "en": "Availability has changed",
+              "nl": "Beschikbaarheid is veranderd"
+            },
+            "tokens": [
+              {
+                "name": "measure_available",
+                "title": {
+                  "en": "Is Available",
+                  "nl": "Is Beschikbaar"
+                },
+                "type": "boolean"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "measure_amount_available": {
+        "type": "number",
+        "title": {
+          "en": "Availability",
+          "nl": "Beschikbaar"
+        },
+        "getable": true,
+        "setable": false,
+        "insights": false,
+        "uiComponent": "sensor",
+        "units": {
+            "en": "Available",
+            "nl": "Vrij"
+        },
+        "icon": "assets/icons/check-square.svg"
+      },
+      "measure_occupied": {
+        "type": "number",
+        "title": {
+          "en": "Occupied",
+          "nl": "Bezet"
+        },
+        "getable": true,
+        "setable": false,
+        "insights": false,
+        "uiComponent": "sensor",
+        "icon": "assets/icons/battery-charging.svg",
+        "units": {
+            "en": "Occupied",
+            "nl": "Bezet"
+        }
+      }
+  }
+}

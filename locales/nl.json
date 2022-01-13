@@ -1,0 +1,18 @@
+{
+    "pair": {
+      "apikey_instructions": "Verkrijg de API Key op ",
+      "apikey": "API Key",
+      "login": "Login",
+      "search_instructions": "Zoek naar laadpalen vlakbij een adres",
+      "search": "Adres",
+      "search_submit": "Zoeken",
+      "error": "Er is iets fout gegaan. Check de API_KEY",
+      "error_empty": "Geen laadpalen gevonden."
+    },
+    "helpers": {
+      "days": "d",
+      "hours": "h",
+      "minutes": "m"
+    }
+  }
+  

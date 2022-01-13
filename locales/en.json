@@ -1,0 +1,17 @@
+{
+  "pair": {
+    "apikey_instructions": "Get your API Key from ",
+    "apikey": "API Key",
+    "login": "Login",
+    "search_instructions": "Search for charging stations near an address",
+    "search": "Address",
+    "search_submit": "Search",
+    "error": "Something went wrong. Check your API_KEY",
+    "error_empty": "No charging station found."
+  },
+  "helpers": {
+    "days": "d",
+    "hours": "h",
+    "minutes": "m"
+  }
+}
