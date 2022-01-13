@@ -1,6 +1,6 @@
 {
   "id": "com.tomtom",
-  "version": "0.0.2",
+  "version": "1.0.0",
   "compatibility": ">=5.0.0",
   "sdk": 3,
   "platforms": [
@@ -53,11 +53,11 @@
     }
   },
   "bugs": {
-    "url": "https://community.homey.app/t/app-pro-controlmyspa/57870"
+    "url": "https://community.homey.app/t//app-pro-tomtom-ev-service/58383"
   },
-  "source": "https://github.com/martijnpoppen/com.balboa",
-  "homeyCommunityTopicId": 57870,
-  "support": "https://community.homey.app/t/app-pro-controlmyspa/57870",
+  "source": "https://github.com/martijnpoppen/com.tomtom",
+  "homeyCommunityTopicId": 58383,
+  "support": "https://community.homey.app/t//app-pro-tomtom-ev-service/58383",
   "drivers": [
     {
       "id": "charging_availability",
