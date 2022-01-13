@@ -170,7 +170,7 @@
       "setable": false,
       "insights": false,
       "uiComponent": "sensor",
-      "icon": "assets/icons/lightning-charge.svg",
+      "icon": "assets/icons/check-square.svg"
       "$flow": {
         "triggers": [
           {
@@ -207,7 +207,7 @@
             "en": "Available",
             "nl": "Vrij"
         },
-        "icon": "assets/icons/check-square.svg"
+        "icon": "assets/icons/lightning-charge.svg",
       },
       "measure_occupied": {
         "type": "number",
