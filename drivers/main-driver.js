@@ -15,6 +15,7 @@ module.exports = class mainDriver extends Homey.Driver {
         session.setHandler('login', async (data) => {
             try {
                 this.homey.app.log(`[Driver] ${this.id} - got data`, data);
+                this.config = { ...data };
 
                 this._TomTomClient = await new TomTom({ ...data });
                 this.selectedDevice = null;
@@ -30,12 +31,14 @@ module.exports = class mainDriver extends Homey.Driver {
         session.setHandler('lookup', async (data) => {
             try {
                 this.homey.app.log(`[Driver] ${this.id} - got data`, data);
-                const address = data.search;
 
                 if(this.errorMsg) {
                     session.emit('lookup_error', this.errorMsg);
                     this.errorMsg = false;
                 }
+
+                const address = data.search;
+                this.config = { ...this.config, ...data };
 
                 this.addressData = await this._TomTomClient.searchAddress(address);
 
