@@ -1,0 +1,93 @@
+<div class=hy-tmpl-select_connectors>
+    <style type=text/css>
+        .hy-tmpl-select_connectors-connectors-label {
+            -webkit-tap-highlight-color: transparent;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            height: 2em;
+            margin-bottom: .5em;
+            background: #eee;
+            padding: .5em 1em;
+            border-radius: 5px
+        }
+
+        .hy-tmpl-select_connectors-connectors-name {
+            order: 1;
+            flex-grow: 1;
+            line-height: 2em;
+            padding-right: 1em;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis
+        }
+
+        .hy-tmpl-select_connectors-connectors-input {
+            order: 2;
+            flex-shrink: 0
+        }
+
+        .hy-tmpl-select_connectors-connectors-icon {
+            flex-shrink: 0;
+            width: 2em;
+            height: 2em;
+            margin-right: .5em;
+            margin-left: -.5em;
+            background-color: #000
+        }
+    </style>
+    <script>
+        !(function () {
+            var wrapper = document.querySelector('.hy-tmpl-select_connectors-connectors');
+            var selectedConnectors = [];
+
+        
+            Homey.setTitle(Homey.__('pair.connectors'));
+
+            Homey.emit('list_connectors', {}).then(data => {
+                data.forEach(function (e, i) {
+                    var label = document.createElement('label');
+                    label.classList.add('hy-tmpl-select_connectors-connectors-label');
+                    label.classList.add('hy-nostyle');
+
+                    wrapper.appendChild(label);
+
+                    var div = document.createElement('div');
+                    div.classList.add('hy-tmpl-select_connectors-connectors-name'), (div.textContent = e), label.appendChild(div);
+
+                    var input = document.createElement('input');
+                    (input.id = e),
+                        (input.type = 'checkbox'),
+                        (input.name = 'connector'),
+                        input.classList.add('hy-input-checkbox'),
+                        input.classList.add('hy-tmpl-select_connectors-connectors-input'),
+                        input.addEventListener('change', function () {
+                            onSelect(!!input.checked);
+                        }),
+                        label.appendChild(input);
+
+                    if (i === 0) {
+                        input.checked = 'checked';
+                        onSelect(true);
+                    } else {
+                        onSelect(false);
+                    }
+
+                    function onSelect(selected) {
+                        if (selected) {
+                            selectedConnectors.push(e);
+                        } else {
+                            selectedConnectors = selectedConnectors.filter(d => d !== e);
+                        }
+
+                        Homey.emit('list_connectors_selection', { selectedConnectors });
+                    }
+                });
+            }).catch(error => {
+                Homey.alert(error);
+                Homey.done();
+            });
+        })();
+    </script>
+    <div class="hy-tmpl-select_connectors-connectors"></div>
+</div>

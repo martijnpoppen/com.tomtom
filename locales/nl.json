@@ -6,6 +6,7 @@
       "search_instructions": "Zoek naar laadpalen vlakbij een adres",
       "search": "Adres",
       "search_submit": "Zoeken",
+      "connectors": "Selecteer je aansluitingen",
       "error": "Er is iets fout gegaan. Check de API_KEY",
       "error_empty": "Geen laadpalen gevonden."
     },

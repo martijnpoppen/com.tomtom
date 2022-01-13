@@ -6,6 +6,7 @@
     "search_instructions": "Search for charging stations near an address",
     "search": "Address",
     "search_submit": "Search",
+    "connectors": "Select your connectors",
     "error": "Something went wrong. Check your API_KEY",
     "error_empty": "No charging station found."
   },

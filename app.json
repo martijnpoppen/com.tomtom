@@ -84,15 +84,24 @@
           "template": "list_devices",
           "navigation": {
             "prev": "search",
-            "next": "add_devices"
+            "next": "get_device"
           },
           "options": {
             "singular": true
           }
         },
         {
-          "id": "add_devices",
-          "template": "add_devices"
+          "id": "get_device"
+        },
+        {
+          "id": "list_connectors",
+          "navigation": {
+            "prev": "list_devices",
+            "next": "add_device"
+          }
+        },
+        {
+          "id": "add_device"
         }
       ],
       "settings": [
@@ -173,36 +182,36 @@
       "icon": "assets/icons/check-square.svg"
     },
     "measure_amount_available": {
-        "type": "number",
-        "title": {
-          "en": "Availability",
-          "nl": "Beschikbaar"
-        },
-        "getable": true,
-        "setable": false,
-        "insights": false,
-        "uiComponent": "sensor",
-        "units": {
-            "en": "Available",
-            "nl": "Vrij"
-        },
-        "icon": "assets/icons/lightning-charge.svg"
+      "type": "number",
+      "title": {
+        "en": "Availability",
+        "nl": "Beschikbaar"
       },
-      "measure_occupied": {
-        "type": "number",
-        "title": {
-          "en": "Occupied",
-          "nl": "Bezet"
-        },
-        "getable": true,
-        "setable": false,
-        "insights": false,
-        "uiComponent": "sensor",
-        "icon": "assets/icons/battery-charging.svg",
-        "units": {
-            "en": "Occupied",
-            "nl": "Bezet"
-        }
+      "getable": true,
+      "setable": false,
+      "insights": true,
+      "uiComponent": "sensor",
+      "units": {
+        "en": "Available",
+        "nl": "Vrij"
+      },
+      "icon": "assets/icons/lightning-charge.svg"
+    },
+    "measure_occupied": {
+      "type": "number",
+      "title": {
+        "en": "Occupied",
+        "nl": "Bezet"
+      },
+      "getable": true,
+      "setable": false,
+      "insights": true,
+      "uiComponent": "sensor",
+      "icon": "assets/icons/battery-charging.svg",
+      "units": {
+        "en": "Occupied",
+        "nl": "Bezet"
       }
+    }
   }
 }

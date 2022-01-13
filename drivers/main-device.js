@@ -58,7 +58,7 @@ module.exports = class mainDevice extends Homey.Device {
 
             this.homey.app.log(`[Device] ${this.getName()} - deviceInfo =>`, deviceInfo);
 
-            const { connectors } = deviceInfo;
+            const { connectors, chargingAvailability } = deviceInfo;
 
             
             if (checkCapabilities) {
@@ -66,13 +66,15 @@ module.exports = class mainDevice extends Homey.Device {
             }
 
             for(const connector of connectors) {
-                this.homey.app.log(`[Device] ${this.getName()} - ${connector.type} - connector =>`, connector);
                 const { availability } = connector;
-                this.homey.app.log(`[Device] ${this.getName()} - ${connector.type} - availability =>`, availability);
-                
-                await this.setCapabilityValue(`measure_available.${connector.type}`, !!parseInt(availability.current.available));
-                await this.setCapabilityValue(`measure_amount_available.${connector.type}`, parseInt(availability.current.available));
-                await this.setCapabilityValue(`measure_occupied.${connector.type}`, parseInt(availability.current.occupied) || 0);
+                const { current } = availability;
+
+                this.homey.app.log(`[Device] ${this.getName()} - ${connector.type} | ${chargingAvailability} - connector =>`, connector);
+                if(settings.connectors.includes(connector.type)) {
+                    await this.setCapabilityValue(`measure_available.${connector.type}`, !!parseInt(current.available));
+                    await this.setCapabilityValue(`measure_amount_available.${connector.type}`, parseInt(current.available));
+                    await this.setCapabilityValue(`measure_occupied.${connector.type}`, parseInt(current.occupied) || 0);
+                }
             }
         } catch (error) {
             this.homey.app.log(error);
@@ -131,38 +133,43 @@ module.exports = class mainDevice extends Homey.Device {
     }
 
     async checkSubCapabilities(connectors) {
+        const settings = this.getSettings();
+        this.homey.app.log(`[Device] ${this.getName()} - checkSubCapabilities`);
+
         for(const connector of connectors) {
-            if (!this.hasCapability(`measure_amount_available.${connector.type}`)) {
-                await this.addCapability(`measure_amount_available.${connector.type}`);
-                await this.setCapabilityOptions(`measure_amount_available.${connector.type}`, {
-                    title: {
-                        en: `Aantal (${connector.type})`,
-                        nl: `Aantal (${connector.type})`
-                    }
-                });
-                await sleep(1000);
-            }
+            if(settings.connectors.includes(connector.type)) {
+                if (!this.hasCapability(`measure_amount_available.${connector.type}`)) {
+                    await this.addCapability(`measure_amount_available.${connector.type}`);
+                    await this.setCapabilityOptions(`measure_amount_available.${connector.type}`, {
+                        title: {
+                            en: `Aantal (${connector.type})`,
+                            nl: `Aantal (${connector.type})`
+                        }
+                    });
+                    await sleep(1000);
+                }
 
-            if (!this.hasCapability(`measure_available.${connector.type}`)) {
-                await this.addCapability(`measure_available.${connector.type}`);
-                await this.setCapabilityOptions(`measure_available.${connector.type}`, {
-                    title: {
-                        en: `Vrij (${connector.type})`,
-                        nl: `Vrij (${connector.type})`
-                    }
-                });
-                await sleep(1000);
-            }
+                if (!this.hasCapability(`measure_available.${connector.type}`)) {
+                    await this.addCapability(`measure_available.${connector.type}`);
+                    await this.setCapabilityOptions(`measure_available.${connector.type}`, {
+                        title: {
+                            en: `Vrij (${connector.type})`,
+                            nl: `Vrij (${connector.type})`
+                        }
+                    });
+                    await sleep(1000);
+                }
 
-            if (!this.hasCapability(`measure_occupied.${connector.type}`)) {
-                await this.addCapability(`measure_occupied.${connector.type}`);
-                await this.setCapabilityOptions(`measure_occupied.${connector.type}`, {
-                    title: {
-                        en: `Occupied (${connector.type})`,
-                        nl: `Bezet (${connector.type})`
-                    }
-                });
-                await sleep(1000);
+                if (!this.hasCapability(`measure_occupied.${connector.type}`)) {
+                    await this.addCapability(`measure_occupied.${connector.type}`);
+                    await this.setCapabilityOptions(`measure_occupied.${connector.type}`, {
+                        title: {
+                            en: `Occupied (${connector.type})`,
+                            nl: `Bezet (${connector.type})`
+                        }
+                    });
+                    await sleep(1000);
+                }
             }
         }
     }

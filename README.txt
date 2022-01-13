@@ -1,5 +1,5 @@
 ## Get Realtime Charging Availability
 
-**Current features:**
+Current features:
 - Get Charging Stations
 - Get availability

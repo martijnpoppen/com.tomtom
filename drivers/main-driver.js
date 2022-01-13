@@ -18,6 +18,7 @@ module.exports = class mainDriver extends Homey.Driver {
                 this.config = { ...data };
 
                 this._TomTomClient = await new TomTom({ ...data });
+                this.selectedDevice = null;
 
                 return true;
             } catch (error) {
@@ -55,7 +56,7 @@ module.exports = class mainDriver extends Homey.Driver {
         session.setHandler('list_devices', async () => {
             this.homey.app.log(`[Driver] ${this.id} - this.searchData`, this.searchData);
 
-            if (!this.searchData && !this.searchData.results) {
+            if (!this.searchData || !this.searchData.results) {
                 return false;
             }
 
@@ -66,13 +67,62 @@ module.exports = class mainDriver extends Homey.Driver {
                 },
                 settings: {
                     ...this.config,
-                    chargingAvailability: result.dataSources.chargingAvailability.id
+                    chargingAvailability: result.dataSources.chargingAvailability.id,
+                    connectors: []
                 }
             }));
 
             this.homey.app.log(`[Driver] ${this.id} - Found devices - `, results);
 
             return results;
+        });
+
+        session.setHandler('list_devices_selection', async (data) => {
+            this.homey.app.log(`[Driver] ${this.id} - list_devices_selection - `, data);
+            this.selectedDevice = data[0];
+            return this.selectedDevice;
+        });
+
+        session.setHandler('get_device', async () => {
+            return session.showView('list_connectors');
+        });
+
+
+        session.setHandler('list_connectors', async () => {
+            this.homey.app.log(`[Driver] ${this.id} - this.selectedDevice`, this.selectedDevice);
+
+            if (!this.selectedDevice) {
+                return false;
+            }
+
+            const chargingAvailability = await this._TomTomClient.getChargingAvailability(this.selectedDevice.data.id);
+
+            this.homey.app.log(`[Driver] ${this.id} - chargingAvailability - `, chargingAvailability.connectors);
+
+            if (chargingAvailability && chargingAvailability.connectors) {
+                const results = chargingAvailability.connectors.map((connector) => connector.type);
+
+                session.emit('get_connectors', results);
+                return results;
+            }
+
+            return false;
+        });
+
+        session.setHandler('list_connectors_selection', async (data) => {
+            this.homey.app.log(`[Driver] ${this.id} - list_connectors_selection - `, data);
+
+           this.selectedDevice.settings.connectors = [...data.selectedConnectors];
+
+           return this.selectedDevice;
+        });
+
+        session.setHandler('add_device', async (data) => {
+            try {
+                return this.selectedDevice;
+            } catch (error) {
+                return Promise.reject(error);
+            }
         });
     }
 };
