@@ -178,7 +178,7 @@
       "getable": true,
       "setable": false,
       "insights": false,
-      "uiComponent": "sensor",
+      "uiComponent": null,
       "icon": "assets/icons/check-square.svg"
     },
     "measure_amount_available": {
@@ -195,7 +195,7 @@
         "en": "Available",
         "nl": "Vrij"
       },
-      "icon": "assets/icons/lightning-charge.svg"
+      "icon": "assets/icons/unlock.svg"
     },
     "measure_occupied": {
       "type": "number",
@@ -207,26 +207,10 @@
       "setable": false,
       "insights": true,
       "uiComponent": "sensor",
-      "icon": "assets/icons/battery-charging.svg",
+      "icon": "assets/icons/lock.svg",
       "units": {
         "en": "Occupied",
         "nl": "Bezet"
-      }
-    },
-    "measure_kwh": {
-      "type": "number",
-      "title": {
-        "en": "KWH",
-        "nl": "KWH"
-      },
-      "getable": true,
-      "setable": false,
-      "insights": true,
-      "uiComponent": "sensor",
-      "icon": "assets/icons/battery-charging.svg",
-      "units": {
-        "en": "KWH",
-        "nl": "KWH"
       }
     }
   }

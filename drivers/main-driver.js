@@ -1,5 +1,6 @@
 const Homey = require('homey');
 const TomTom = require('../lib/tomtom');
+const { rename } = require('../lib/helpers');
 
 module.exports = class mainDriver extends Homey.Driver {
     onInit() {
@@ -108,7 +109,7 @@ module.exports = class mainDriver extends Homey.Driver {
             this.homey.app.log(`[Driver] ${this.id} - chargingAvailability - `, chargingAvailability.connectors);
 
             if (chargingAvailability && chargingAvailability.connectors) {
-                const results = chargingAvailability.connectors.map((connector) => connector.type);
+                const results = chargingAvailability.connectors.map((connector) => rename(connector.type));
 
                 session.emit('get_connectors', results);
                 return results;
