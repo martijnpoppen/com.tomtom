@@ -15,10 +15,10 @@ module.exports = class mainDriver extends Homey.Driver {
         session.setHandler('login', async (data) => {
             try {
                 this.homey.app.log(`[Driver] ${this.id} - got data`, data);
-                this.config = { ...data };
 
                 this._TomTomClient = await new TomTom({ ...data });
                 this.selectedDevice = null;
+                this.errorMsg = false;
 
                 return true;
             } catch (error) {
@@ -32,9 +32,10 @@ module.exports = class mainDriver extends Homey.Driver {
                 this.homey.app.log(`[Driver] ${this.id} - got data`, data);
                 const address = data.search;
 
-                this.config = { ...this.config, ...data };
-
-                this.homey.app.log(`[Driver] ${this.id} - got data`, data);
+                if(this.errorMsg) {
+                    session.emit('lookup_error', this.errorMsg);
+                    this.errorMsg = false;
+                }
 
                 this.addressData = await this._TomTomClient.searchAddress(address);
 
@@ -43,21 +44,25 @@ module.exports = class mainDriver extends Homey.Driver {
 
                     this.searchData = await this._TomTomClient.searchLatLong(address.position);
 
-                    return this.searchData;
+                    if (!this.searchData || !this.searchData.results) {
+                        return null;
+                    } else {
+                        return this.searchData;
+                    }
                 }
 
-                return false;
+               return null;
             } catch (error) {
                 console.log(error);
-                throw new Error(this.homey.__('pair.error'));
             }
         });
 
         session.setHandler('list_devices', async () => {
             this.homey.app.log(`[Driver] ${this.id} - this.searchData`, this.searchData);
 
-            if (!this.searchData || !this.searchData.results) {
-                return false;
+            if (!this.searchData || !this.searchData.results || !this.searchData.results.length) {
+                this.errorMsg = this.homey.__('pair.error_empty');
+                return await session.prevView();
             }
 
             const results = this.searchData.results.map((result) => ({
@@ -84,7 +89,7 @@ module.exports = class mainDriver extends Homey.Driver {
         });
 
         session.setHandler('get_device', async () => {
-            return session.showView('list_connectors');
+            return await session.showView('list_connectors');
         });
 
 

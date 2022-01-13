@@ -61,8 +61,6 @@
                 Homey.showLoadingOverlay(Homey.__("$tmpl.login_credentials.loading")); 
                 var z = l.value;
 
-                console.log(z)
-
                 return Homey.emit("login", { apikey: z }, function (e, o) { 
                     if(e) {
                         Homey.error(e)

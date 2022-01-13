@@ -54,14 +54,18 @@
         lgn = e.querySelector('input[type="submit"]'),
         m = !1; 
         Homey.setTitle(Homey.__("$tmpl.login_credentials.title")),
+
+
+        Homey.on('lookup_error', function (e) {
+            Homey.alert(e);
+        })
+
         lgn.value = Homey.__("pair.search_submit");
         o.addEventListener("submit", function (e) { 
             if (e.preventDefault(), !m) { 
                 m = !0, 
                 Homey.showLoadingOverlay(Homey.__("$tmpl.login_credentials.loading")); 
                 var z = l.value;
-
-                console.log(z);
 
                 return Homey.emit("lookup", { search: z }, function (e, o) { 
                     if(e) {
