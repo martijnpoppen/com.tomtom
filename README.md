@@ -1,8 +1,5 @@
-## Control your Balboa Spa with this app.
+## Get Realtime Chargingavailability
 
 **Current features:**
-- Get spa status
-- Set temperature
-- Toggle heater mode
-- Lock/unlock panel
-- Control Jets, Blowers and Lights
+- Get charging stations
+- Get availability
