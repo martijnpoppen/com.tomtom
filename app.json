@@ -1,9 +1,11 @@
 {
   "id": "com.tomtom",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "compatibility": ">=5.0.0",
   "sdk": 3,
-  "platforms": ["local"],
+  "platforms": [
+    "local"
+  ],
   "brandColor": "#000000",
   "name": {
     "en": "TomTom EV Service",
@@ -16,7 +18,9 @@
   "tags": {
     "en": []
   },
-  "category": ["localization"],
+  "category": [
+    "localization"
+  ],
   "images": {
     "large": "/assets/images/large.jpg",
     "small": "/assets/images/small.jpg"
@@ -58,8 +62,12 @@
     {
       "id": "charging_availability",
       "class": "other",
-      "connectivity": ["cloud"],
-      "platforms": ["local"],
+      "connectivity": [
+        "cloud"
+      ],
+      "platforms": [
+        "local"
+      ],
       "capabilities": [],
       "name": {
         "en": "Chargepoint",
