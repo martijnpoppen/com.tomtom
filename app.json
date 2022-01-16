@@ -213,5 +213,107 @@
         "nl": "Bezet"
       }
     }
+  },
+  "flow": {
+      "conditions": [
+          {
+            "id": "condition_AVAILABLE",
+            "title": {
+              "en": "is available",
+              "nl": "is vrij"
+            },
+            "titleFormatted": {
+              "en": "[[connector]] is available",
+              "nl": "[[connector]] is vrij"
+            },
+            "args": [
+              {
+                "name": "device",
+                "type": "device",
+                "filter": "driver_id=charging_availability"
+              },
+              {
+                "name": "connector",
+                "type": "autocomplete",
+                "placeholder": {
+                  "en": "Connector",
+                  "nl": "Aansluiting"
+                }
+              }
+            ]
+          },{
+            "id": "condition_OCCUPIED",
+            "title": {
+              "en": "is occupied",
+              "nl": "is bezet"
+            },
+            "titleFormatted": {
+              "en": "[[connector]] is occupied",
+              "nl": "[[connector]] is bezet"
+            },
+            "args": [
+              {
+                "name": "device",
+                "type": "device",
+                "filter": "driver_id=charging_availability"
+              },
+              {
+                "name": "connector",
+                "type": "autocomplete",
+                "placeholder": {
+                  "en": "Connector",
+                  "nl": "Aansluiting"
+                }
+              }
+            ]
+          }
+      ],
+      "triggers": [
+        {
+            "id": "trigger_AVAILABLE",
+            "title": {
+                "en": "Availability changed",
+                "nl": "Beschikbaarheid veranderd"
+              },
+              "titleFormatted": {
+                "en": "[[connector]] availability changed",
+                "nl": "[[connector]] beschikbaarheid is veranderd"
+              },
+            "tokens": [
+              {
+                "name": "available",
+                "type": "boolean",
+                "title": {
+                  "en": "Available",
+                  "nl": "Beschikbaar"
+                }
+              },
+              {
+                "name": "connector",
+                "type": "string",
+                "title": {
+                  "en": "Connector",
+                  "nl": "Aansluiting"
+                }
+              }
+            ],
+            "args": [
+              {
+                "name": "device",
+                "type": "device",
+                "filter": "driver_id=charging_availability"
+              },
+              {
+                "name": "connector",
+                "type": "autocomplete",
+                "placeholder": {
+                  "en": "Connector",
+                  "nl": "Aansluiting"
+                }
+              }
+            ],
+            "highlight": true
+          }
+      ]
   }
 }

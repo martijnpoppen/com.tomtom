@@ -1,6 +1,6 @@
 const Homey = require('homey');
 const TomTom = require('../lib/tomtom');
-const { sleep, rename } = require('../lib/helpers');
+const { sleep, rename, getConnector } = require('../lib/helpers');
 
 module.exports = class mainDevice extends Homey.Device {
     async onInit() {
@@ -64,6 +64,8 @@ module.exports = class mainDevice extends Homey.Device {
                 await this.checkSubCapabilities(connectors);
             }
 
+            this.homey.app.log(`[Device] ${this.getName()}  - connectorList =>`, this.connectorList);
+
             for (const connector of connectors) {
                 const { availability } = connector;
                 const { perPowerLevel } = availability;
@@ -74,11 +76,20 @@ module.exports = class mainDevice extends Homey.Device {
 
                     for (let i = 0; i < perPowerLevel.length; i += 1) {
                         const current = perPowerLevel[i];
-                        const {powerKW, available, occupied} = current;
-                        
+                        const { powerKW, available, occupied } = current;
+                        const get_available_old = this.getCapabilityValue(`get_available.${powerKW}.${rename(connector.type)}`);
+
                         await this.setCapabilityValue(`get_available.${powerKW}.${rename(connector.type)}`, !!parseInt(available));
                         await this.setCapabilityValue(`measure_amount_available.${powerKW}.${rename(connector.type)}`, parseInt(available));
                         await this.setCapabilityValue(`measure_occupied.${powerKW}.${rename(connector.type)}`, parseInt(occupied) || 0);
+
+                        if(get_available_old !== !!parseInt(available)) {
+                            await this.homey.app.trigger_AVAILABLE.trigger(
+                                this,
+                                { available: !!parseInt(available), connector: getConnector(connector, powerKW) },
+                                { connector: getConnector(connector, powerKW) }
+                            );
+                        }
                     }
                 }
             }
@@ -128,10 +139,10 @@ module.exports = class mainDevice extends Homey.Device {
     async updateCapabilities(driverCapabilities, deviceCapabilities) {
         this.homey.app.log(`[Device] ${this.getName()} - Add new capabilities =>`, driverCapabilities);
         try {
-            deviceCapabilities.forEach((c) => {
-                this.removeCapability(c);
-            });
-            await sleep(2000);
+            // deviceCapabilities.forEach((c) => {
+            //     this.removeCapability(c);
+            // });
+            // await sleep(2000);
             driverCapabilities.forEach((c) => {
                 this.addCapability(c);
             });
@@ -145,6 +156,8 @@ module.exports = class mainDevice extends Homey.Device {
         const settings = this.getSettings();
         this.homey.app.log(`[Device] ${this.getName()} - checkSubCapabilities`);
 
+        this.connectorList = [];
+
         for (const connector of connectors) {
             if (settings.connectors.includes(rename(connector.type))) {
                 const { availability } = connector;
@@ -152,33 +165,34 @@ module.exports = class mainDevice extends Homey.Device {
 
                 for (let i = 0; i < perPowerLevel.length; i += 1) {
                     const current = perPowerLevel[i];
-                    const {powerKW} = current;
+                    const { powerKW } = current;
 
                     await this.addCapability(`measure_amount_available.${powerKW}.${rename(connector.type)}`);
                     await this.setCapabilityOptions(`measure_amount_available.${powerKW}.${rename(connector.type)}`, {
                         title: {
-                            en: `Vrij (${rename(connector.type)}) - ${powerKW}KW`,
-                            nl: `Vrij (${rename(connector.type)}) - ${powerKW}KW`
+                            en: `Vrij ${getConnector(connector, powerKW)}`,
+                            nl: `Vrij ${getConnector(connector, powerKW)}`
                         }
                     });
 
                     await this.addCapability(`get_available.${powerKW}.${rename(connector.type)}`);
                     await this.setCapabilityOptions(`get_available.${powerKW}.${rename(connector.type)}`, {
                         title: {
-                            en: `Vrij (${rename(connector.type)}) - ${powerKW}KW`,
-                            nl: `Vrij (${rename(connector.type)}) - ${powerKW}KW`
+                            en: `Vrij ${getConnector(connector, powerKW)}`,
+                            nl: `Vrij ${getConnector(connector, powerKW)}`
                         }
                     });
 
                     await this.addCapability(`measure_occupied.${powerKW}.${rename(connector.type)}`);
                     await this.setCapabilityOptions(`measure_occupied.${powerKW}.${rename(connector.type)}`, {
                         title: {
-                            en: `Occupied (${rename(connector.type)}) - ${powerKW}KW`,
-                            nl: `Bezet (${rename(connector.type)}) - ${powerKW}KW`
+                            en: `Occupied ${getConnector(connector, powerKW)}`,
+                            nl: `Bezet ${getConnector(connector, powerKW)}`
                         }
                     });
 
                     await sleep(1000);
+                    this.connectorList = [...this.connectorList, `${getConnector(connector, powerKW)}`];
                 }
             }
         }
