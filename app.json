@@ -1,9 +1,11 @@
 {
   "id": "com.tomtom",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "compatibility": ">=5.0.0",
   "sdk": 3,
-  "platforms": ["local"],
+  "platforms": [
+    "local"
+  ],
   "brandColor": "#000000",
   "name": {
     "en": "TomTom EV Service",
@@ -16,7 +18,9 @@
   "tags": {
     "en": []
   },
-  "category": ["localization"],
+  "category": [
+    "localization"
+  ],
   "images": {
     "large": "/assets/images/large.jpg",
     "small": "/assets/images/small.jpg"
@@ -58,8 +62,12 @@
     {
       "id": "charging_availability",
       "class": "other",
-      "connectivity": ["cloud"],
-      "platforms": ["local"],
+      "connectivity": [
+        "cloud"
+      ],
+      "platforms": [
+        "local"
+      ],
       "capabilities": [],
       "name": {
         "en": "Chargepoint",
@@ -215,121 +223,122 @@
     }
   },
   "flow": {
-      "conditions": [
+    "conditions": [
+      {
+        "id": "condition_AVAILABLE",
+        "title": {
+          "en": "is available",
+          "nl": "is vrij"
+        },
+        "titleFormatted": {
+          "en": "[[connector]] is available",
+          "nl": "[[connector]] is vrij"
+        },
+        "args": [
           {
-            "id": "condition_AVAILABLE",
-            "title": {
-              "en": "is available",
-              "nl": "is vrij"
-            },
-            "titleFormatted": {
-              "en": "[[connector]] is available",
-              "nl": "[[connector]] is vrij"
-            },
-            "args": [
-              {
-                "name": "device",
-                "type": "device",
-                "filter": "driver_id=charging_availability"
-              },
-              {
-                "name": "connector",
-                "type": "autocomplete",
-                "placeholder": {
-                  "en": "Connector",
-                  "nl": "Aansluiting"
-                }
-              }
-            ]
-          },{
-            "id": "condition_OCCUPIED",
-            "title": {
-              "en": "is occupied",
-              "nl": "is bezet"
-            },
-            "titleFormatted": {
-              "en": "[[connector]] is occupied",
-              "nl": "[[connector]] is bezet"
-            },
-            "args": [
-              {
-                "name": "device",
-                "type": "device",
-                "filter": "driver_id=charging_availability"
-              },
-              {
-                "name": "connector",
-                "type": "autocomplete",
-                "placeholder": {
-                  "en": "Connector",
-                  "nl": "Aansluiting"
-                }
-              }
-            ]
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=charging_availability"
+          },
+          {
+            "name": "connector",
+            "type": "autocomplete",
+            "placeholder": {
+              "en": "Connector",
+              "nl": "Aansluiting"
+            }
           }
-      ],
-      "triggers": [
-        {
-            "id": "trigger_AVAILABLE",
-            "title": {
-                "en": "Availability changed",
-                "nl": "Beschikbaarheid veranderd"
-              },
-              "titleFormatted": {
-                "en": "[[connector]] availability changed",
-                "nl": "[[connector]] beschikbaarheid is veranderd"
-              },
-            "tokens": [
-              {
-                "name": "available",
-                "type": "boolean",
-                "title": {
-                  "en": "Available",
-                  "nl": "Beschikbaar"
-                }
-              },
-              {
-                "name": "amount_available",
-                "type": "number",
-                "title": {
-                  "en": "Amount available",
-                  "nl": "Aantal vrij"
-                }
-              },
-              {
-                "name": "amount_occupied",
-                "type": "number",
-                "title": {
-                  "en": "Amount occupied",
-                  "nl": "Aantal bezet"
-                }
-              },
-              {
-                "name": "connector",
-                "type": "string",
-                "title": {
-                  "en": "Connector",
-                  "nl": "Aansluiting"
-                }
-              }
-            ],
-            "args": [
-              {
-                "name": "device",
-                "type": "device",
-                "filter": "driver_id=charging_availability"
-              },
-              {
-                "name": "connector",
-                "type": "autocomplete",
-                "placeholder": {
-                  "en": "Connector",
-                  "nl": "Aansluiting"
-                }
-              }
-            ],
-            "highlight": true
+        ]
+      },
+      {
+        "id": "condition_OCCUPIED",
+        "title": {
+          "en": "is occupied",
+          "nl": "is bezet"
+        },
+        "titleFormatted": {
+          "en": "[[connector]] is occupied",
+          "nl": "[[connector]] is bezet"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=charging_availability"
+          },
+          {
+            "name": "connector",
+            "type": "autocomplete",
+            "placeholder": {
+              "en": "Connector",
+              "nl": "Aansluiting"
+            }
           }
-      ]
+        ]
+      }
+    ],
+    "triggers": [
+      {
+        "id": "trigger_AVAILABLE",
+        "title": {
+          "en": "Availability changed",
+          "nl": "Beschikbaarheid veranderd"
+        },
+        "titleFormatted": {
+          "en": "[[connector]] availability changed",
+          "nl": "[[connector]] beschikbaarheid is veranderd"
+        },
+        "tokens": [
+          {
+            "name": "available",
+            "type": "boolean",
+            "title": {
+              "en": "Available",
+              "nl": "Beschikbaar"
+            }
+          },
+          {
+            "name": "amount_available",
+            "type": "number",
+            "title": {
+              "en": "Amount available",
+              "nl": "Aantal vrij"
+            }
+          },
+          {
+            "name": "amount_occupied",
+            "type": "number",
+            "title": {
+              "en": "Amount occupied",
+              "nl": "Aantal bezet"
+            }
+          },
+          {
+            "name": "connector",
+            "type": "string",
+            "title": {
+              "en": "Connector",
+              "nl": "Aansluiting"
+            }
+          }
+        ],
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=charging_availability"
+          },
+          {
+            "name": "connector",
+            "type": "autocomplete",
+            "placeholder": {
+              "en": "Connector",
+              "nl": "Aansluiting"
+            }
+          }
+        ],
+        "highlight": true
+      }
+    ]
   }
 }
