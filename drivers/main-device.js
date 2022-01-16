@@ -83,10 +83,10 @@ module.exports = class mainDevice extends Homey.Device {
                         await this.setCapabilityValue(`measure_amount_available.${powerKW}.${rename(connector.type)}`, parseInt(available));
                         await this.setCapabilityValue(`measure_occupied.${powerKW}.${rename(connector.type)}`, parseInt(occupied) || 0);
 
-                        if(get_available_old !== !!parseInt(available)) {
+                        if (get_available_old !== !!parseInt(available)) {
                             await this.homey.app.trigger_AVAILABLE.trigger(
                                 this,
-                                { available: !!parseInt(available), connector: getConnector(connector, powerKW) },
+                                { available: !!parseInt(available), amount_available: parseInt(available), amount_occupied: parseInt(occupied), connector: getConnector(connector, powerKW) },
                                 { connector: getConnector(connector, powerKW) }
                             );
                         }

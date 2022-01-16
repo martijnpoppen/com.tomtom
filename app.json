@@ -289,6 +289,22 @@
                 }
               },
               {
+                "name": "amount_available",
+                "type": "number",
+                "title": {
+                  "en": "Amount available",
+                  "nl": "Aantal vrij"
+                }
+              },
+              {
+                "name": "amount_occupied",
+                "type": "number",
+                "title": {
+                  "en": "Amount occupied",
+                  "nl": "Aantal bezet"
+                }
+              },
+              {
                 "name": "connector",
                 "type": "string",
                 "title": {
