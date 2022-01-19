@@ -10,5 +10,8 @@
   },
   "1.1.0": {
     "en": "NEW: add flowcards"
+  },
+  "1.1.1": {
+    "en": "Remember API_KEY + improve search"
   }
 }
