@@ -13,7 +13,16 @@ module.exports = class mainDriver extends Homey.Driver {
     }
 
     async onPair(session) {
-        session.setHandler('login', async (data) => {
+        const appSettings = this.homey.app.getSettings();
+        this.homey.app.log(`[Driver] - ${this.id} - appSettings `, appSettings);
+
+        session.setHandler('showView', async function (viewId) {
+            if (viewId === 'login' && appSettings.API_KEY) {
+                await session.emit('set_apikey', appSettings.API_KEY);
+            }
+        });
+
+        session.setHandler('login_tomtom', async (data) => {
             try {
                 this.homey.app.log(`[Driver] ${this.id} - got data`, data);
                 this.config = { ...data };
@@ -21,6 +30,9 @@ module.exports = class mainDriver extends Homey.Driver {
                 this._TomTomClient = await new TomTom({ ...data });
                 this.selectedDevice = null;
                 this.errorMsg = false;
+
+                // Set api key to app settings to auto fill for the next time
+                this.homey.app.updateSettings({ API_KEY: data.apikey });
 
                 return true;
             } catch (error) {
@@ -33,8 +45,8 @@ module.exports = class mainDriver extends Homey.Driver {
             try {
                 this.homey.app.log(`[Driver] ${this.id} - got data`, data);
 
-                if(this.errorMsg) {
-                    session.emit('lookup_error', this.errorMsg);
+                if (this.errorMsg) {
+                    await session.emit('lookup_error', this.errorMsg);
                     this.errorMsg = false;
                 }
 
@@ -55,7 +67,7 @@ module.exports = class mainDriver extends Homey.Driver {
                     }
                 }
 
-               return null;
+                return null;
             } catch (error) {
                 console.log(error);
             }
@@ -96,7 +108,6 @@ module.exports = class mainDriver extends Homey.Driver {
             return await session.showView('list_connectors');
         });
 
-
         session.setHandler('list_connectors', async () => {
             this.homey.app.log(`[Driver] ${this.id} - this.selectedDevice`, this.selectedDevice);
 
@@ -121,9 +132,9 @@ module.exports = class mainDriver extends Homey.Driver {
         session.setHandler('list_connectors_selection', async (data) => {
             this.homey.app.log(`[Driver] ${this.id} - list_connectors_selection - `, data);
 
-           this.selectedDevice.settings.connectors = [...data.selectedConnectors];
+            this.selectedDevice.settings.connectors = [...data.selectedConnectors];
 
-           return this.selectedDevice;
+            return this.selectedDevice;
         });
 
         session.setHandler('add_device', async (data) => {

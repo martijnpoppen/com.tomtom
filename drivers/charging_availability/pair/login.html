@@ -53,15 +53,22 @@
         l = e.querySelector('input[name="apikey"]'),
         lgn = e.querySelector('input[type="submit"]'),
         m = !1; 
+
+        Homey.on('set_apikey', function (apikey) {
+            console.log(apikey)
+            l.value = apikey;
+        });
+       
         Homey.setTitle(Homey.__("$tmpl.login_credentials.title")),
         lgn.value = Homey.__("pair.login");
+
         o.addEventListener("submit", function (e) { 
             if (e.preventDefault(), !m) { 
                 m = !0, 
                 Homey.showLoadingOverlay(Homey.__("$tmpl.login_credentials.loading")); 
                 var z = l.value;
 
-                return Homey.emit("login", { apikey: z }, function (e, o) { 
+                return Homey.emit("login_tomtom", { apikey: z }, function (e, o) { 
                     if(e) {
                         Homey.error(e)
                     } else if(z) {
