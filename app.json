@@ -1,6 +1,6 @@
 {
   "id": "com.tomtom",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "compatibility": ">=5.0.0",
   "sdk": 3,
   "platforms": [
@@ -74,8 +74,8 @@
         "nl": "Laadpaal"
       },
       "images": {
-        "large": "drivers/charging_availability/assets/images/large.jpg",
-        "small": "drivers/charging_availability/assets/images/small.jpg"
+        "large": "drivers/charging_availability/assets/images/large.png",
+        "small": "drivers/charging_availability/assets/images/small.png"
       },
       "pair": [
         {
