@@ -19,5 +19,8 @@
   },
   "1.1.3": {
     "en": "FIX: search api - ev box couldn't be found"
+  },
+  "1.2.0": {
+    "en": "NEW: add amount changed trigger flowcard"
   }
 }
