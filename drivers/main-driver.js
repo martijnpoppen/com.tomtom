@@ -84,11 +84,11 @@ module.exports = class mainDriver extends Homey.Driver {
             const results = this.searchData.results.map((result) => ({
                 name: result.poi.name,
                 data: {
-                    id: result.dataSources.chargingAvailability.id
+                    id: result.id
                 },
                 settings: {
                     ...this.config,
-                    chargingAvailability: result.dataSources.chargingAvailability.id,
+                    chargingAvailability: result.id,
                     connectors: []
                 }
             }));

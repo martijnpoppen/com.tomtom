@@ -78,6 +78,7 @@ module.exports = class mainDevice extends Homey.Device {
                         const current = perPowerLevel[i];
                         const { powerKW, available, occupied } = current;
                         const get_available_old = this.getCapabilityValue(`get_available.${powerKW}.${rename(connector.type)}`);
+                        const get_available_amount_old = this.getCapabilityValue(`measure_amount_available.${powerKW}.${rename(connector.type)}`);
 
                         await this.setCapabilityValue(`get_available.${powerKW}.${rename(connector.type)}`, !!parseInt(available));
                         await this.setCapabilityValue(`measure_amount_available.${powerKW}.${rename(connector.type)}`, parseInt(available));
@@ -86,7 +87,14 @@ module.exports = class mainDevice extends Homey.Device {
                         if (get_available_old !== !!parseInt(available)) {
                             await this.homey.app.trigger_AVAILABLE.trigger(
                                 this,
-                                { available: !!parseInt(available), amount_available: parseInt(available), amount_occupied: parseInt(occupied), connector: getConnector(connector, powerKW) },
+                                { available: !!parseInt(available), occupied: !parseInt(available), amount_available: parseInt(available), amount_occupied: parseInt(occupied), connector: getConnector(connector, powerKW) },
+                                { connector: getConnector(connector, powerKW) }
+                            );
+                        }
+                        if(get_available_amount_old !== parseInt(available)) {
+                            await this.homey.app.trigger_AVAILABLE_AMOUNT.trigger(
+                                this,
+                                { available: !!parseInt(available), occupied: !parseInt(available), amount_available: parseInt(available), amount_occupied: parseInt(occupied), connector: getConnector(connector, powerKW) },
                                 { connector: getConnector(connector, powerKW) }
                             );
                         }
