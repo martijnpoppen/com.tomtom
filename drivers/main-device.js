@@ -70,7 +70,7 @@ module.exports = class mainDevice extends Homey.Device {
                 const { availability } = connector;
                 const { perPowerLevel } = availability;
 
-                if (settings.connectors.includes(rename(connector.type))) {
+                if (perPowerLevel && settings.connectors.includes(rename(connector.type))) {
                     this.homey.app.log(`[Device] ${this.getName()} - ${rename(connector.type)} | ${chargingAvailability} - connector =>`, connector);
                     this.homey.app.log(`[Device] ${this.getName()} - ${rename(connector.type)} | ${chargingAvailability} - perPowerLevel =>`, perPowerLevel);
 
@@ -87,18 +87,32 @@ module.exports = class mainDevice extends Homey.Device {
                         if (get_available_old !== !!parseInt(available)) {
                             await this.homey.app.trigger_AVAILABLE.trigger(
                                 this,
-                                { available: !!parseInt(available), occupied: !parseInt(available), amount_available: parseInt(available), amount_occupied: parseInt(occupied), connector: getConnector(connector, powerKW) },
+                                {
+                                    available: !!parseInt(available),
+                                    occupied: !parseInt(available),
+                                    amount_available: parseInt(available),
+                                    amount_occupied: parseInt(occupied),
+                                    connector: getConnector(connector, powerKW)
+                                },
                                 { connector: getConnector(connector, powerKW) }
                             );
                         }
-                        if(get_available_amount_old !== parseInt(available)) {
+                        if (get_available_amount_old !== parseInt(available)) {
                             await this.homey.app.trigger_AVAILABLE_AMOUNT.trigger(
                                 this,
-                                { available: !!parseInt(available), occupied: !parseInt(available), amount_available: parseInt(available), amount_occupied: parseInt(occupied), connector: getConnector(connector, powerKW) },
+                                {
+                                    available: !!parseInt(available),
+                                    occupied: !parseInt(available),
+                                    amount_available: parseInt(available),
+                                    amount_occupied: parseInt(occupied),
+                                    connector: getConnector(connector, powerKW)
+                                },
                                 { connector: getConnector(connector, powerKW) }
                             );
                         }
                     }
+                } else {
+                    this.homey.app.log(`[Device] ${this.getName()} - ${rename(connector.type)} | ${chargingAvailability} - perPowerLevel => ERROR (Nothing found)`, { availability, perPowerLevel });
                 }
             }
         } catch (error) {
@@ -171,36 +185,40 @@ module.exports = class mainDevice extends Homey.Device {
                 const { availability } = connector;
                 const { perPowerLevel } = availability;
 
-                for (let i = 0; i < perPowerLevel.length; i += 1) {
-                    const current = perPowerLevel[i];
-                    const { powerKW } = current;
+                if (perPowerLevel) {
+                    for (let i = 0; i < perPowerLevel.length; i += 1) {
+                        const current = perPowerLevel[i];
+                        const { powerKW } = current;
 
-                    await this.addCapability(`measure_amount_available.${powerKW}.${rename(connector.type)}`);
-                    await this.setCapabilityOptions(`measure_amount_available.${powerKW}.${rename(connector.type)}`, {
-                        title: {
-                            en: `Vrij ${getConnector(connector, powerKW)}`,
-                            nl: `Vrij ${getConnector(connector, powerKW)}`
-                        }
-                    });
+                        await this.addCapability(`measure_amount_available.${powerKW}.${rename(connector.type)}`);
+                        await this.setCapabilityOptions(`measure_amount_available.${powerKW}.${rename(connector.type)}`, {
+                            title: {
+                                en: `Vrij ${getConnector(connector, powerKW)}`,
+                                nl: `Vrij ${getConnector(connector, powerKW)}`
+                            }
+                        });
 
-                    await this.addCapability(`get_available.${powerKW}.${rename(connector.type)}`);
-                    await this.setCapabilityOptions(`get_available.${powerKW}.${rename(connector.type)}`, {
-                        title: {
-                            en: `Vrij ${getConnector(connector, powerKW)}`,
-                            nl: `Vrij ${getConnector(connector, powerKW)}`
-                        }
-                    });
+                        await this.addCapability(`get_available.${powerKW}.${rename(connector.type)}`);
+                        await this.setCapabilityOptions(`get_available.${powerKW}.${rename(connector.type)}`, {
+                            title: {
+                                en: `Vrij ${getConnector(connector, powerKW)}`,
+                                nl: `Vrij ${getConnector(connector, powerKW)}`
+                            }
+                        });
 
-                    await this.addCapability(`measure_occupied.${powerKW}.${rename(connector.type)}`);
-                    await this.setCapabilityOptions(`measure_occupied.${powerKW}.${rename(connector.type)}`, {
-                        title: {
-                            en: `Occupied ${getConnector(connector, powerKW)}`,
-                            nl: `Bezet ${getConnector(connector, powerKW)}`
-                        }
-                    });
+                        await this.addCapability(`measure_occupied.${powerKW}.${rename(connector.type)}`);
+                        await this.setCapabilityOptions(`measure_occupied.${powerKW}.${rename(connector.type)}`, {
+                            title: {
+                                en: `Occupied ${getConnector(connector, powerKW)}`,
+                                nl: `Bezet ${getConnector(connector, powerKW)}`
+                            }
+                        });
 
-                    await sleep(1000);
-                    this.connectorList = [...this.connectorList, `${getConnector(connector, powerKW)}`];
+                        await sleep(1000);
+                        this.connectorList = [...this.connectorList, `${getConnector(connector, powerKW)}`];
+                    }
+                } else {
+                    this.homey.app.log(`[Device] ${this.getName()} - ${rename(connector.type)} | perPowerLevel => ERROR (Nothing found)`, { availability, perPowerLevel });
                 }
             }
         }

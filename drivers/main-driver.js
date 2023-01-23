@@ -81,17 +81,21 @@ module.exports = class mainDriver extends Homey.Driver {
                 return await session.prevView();
             }
 
-            const results = this.searchData.results.map((result) => ({
-                name: result.poi.name,
-                data: {
-                    id: result.id
-                },
-                settings: {
-                    ...this.config,
-                    chargingAvailability: result.id,
-                    connectors: []
-                }
-            }));
+            const results = this.searchData.results.map((result) => {
+                const chargingId = result.info.replace('search:ev:', '');
+
+                return {
+                    name: result.poi.name,
+                    data: {
+                        id: chargingId
+                    },
+                    settings: {
+                        ...this.config,
+                        chargingAvailability: chargingId,
+                        connectors: []
+                    }
+                };
+            });
 
             this.homey.app.log(`[Driver] ${this.id} - Found devices - `, results);
 
