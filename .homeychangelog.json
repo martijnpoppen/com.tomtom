@@ -22,5 +22,8 @@
   },
   "1.2.0": {
     "en": "NEW: add amount changed trigger flowcard"
+  },
+  "1.2.1": {
+    "en": "FIX: update API"
   }
 }
