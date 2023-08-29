@@ -25,5 +25,8 @@
   },
   "1.2.1": {
     "en": "FIX: update API"
+  },
+  "1.3.0": {
+    "en": "NEW: search based on POI"
   }
 }
