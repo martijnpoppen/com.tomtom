@@ -59,13 +59,13 @@
             l.value = apikey;
         });
        
-        Homey.setTitle(Homey.__("$tmpl.login_credentials.title")),
+        Homey.setTitle(Homey.__("pair.login")),
         lgn.value = Homey.__("pair.login");
 
         o.addEventListener("submit", function (e) { 
             if (e.preventDefault(), !m) { 
                 m = !0, 
-                Homey.showLoadingOverlay(Homey.__("$tmpl.login_credentials.loading")); 
+                Homey.showLoadingOverlay(Homey.__("pair.login")); 
                 var z = l.value;
 
                 return Homey.emit("login_tomtom", { apikey: z }, function (e, o) { 
@@ -74,7 +74,7 @@
                     } else if(z) {
                         Homey.nextView()
                     } else {
-                        Homey.error(Homey.__("$tmpl.login_credentials.invalid_credentials"))
+                        Homey.error(Homey.__("pair.error"))
                     }
 
                     m = !1;
