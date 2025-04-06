@@ -1,0 +1,115 @@
+{
+  "class": "other",
+  "connectivity": [
+    "cloud"
+  ],
+  "platforms": [
+    "local"
+  ],
+  "capabilities": [],
+  "name": {
+    "en": "Chargepoint",
+    "nl": "Laadpaal"
+  },
+  "images": {
+    "large": "drivers/charging_availability/assets/images/large.png",
+    "small": "drivers/charging_availability/assets/images/small.png"
+  },
+  "pair": [
+    {
+      "id": "login"
+    },
+    {
+      "id": "search",
+      "navigation": {
+        "prev": "login"
+      }
+    },
+    {
+      "id": "list_devices",
+      "template": "list_devices",
+      "navigation": {
+        "prev": "search",
+        "next": "get_device"
+      },
+      "options": {
+        "singular": true
+      }
+    },
+    {
+      "id": "get_device"
+    },
+    {
+      "id": "list_connectors",
+      "navigation": {
+        "prev": "list_devices",
+        "next": "add_device"
+      }
+    },
+    {
+      "id": "add_device"
+    }
+  ],
+  "settings": [
+    {
+      "type": "group",
+      "label": {
+        "en": "General settings",
+        "nl": "Algemene instellingen"
+      },
+      "children": [
+        {
+          "id": "update_interval",
+          "type": "number",
+          "label": {
+            "en": "Update interval",
+            "nl": "Update interval"
+          },
+          "min": 30,
+          "max": 3600,
+          "units": {
+            "en": "seconds",
+            "nl": "seconden"
+          },
+          "value": 120
+        }
+      ]
+    },
+    {
+      "type": "group",
+      "label": {
+        "en": "Login settings",
+        "nl": "Login instellingen"
+      },
+      "children": [
+        {
+          "id": "apikey",
+          "type": "text",
+          "label": {
+            "en": "API KEY",
+            "nl": "API KEY"
+          },
+          "value": ""
+        },
+        {
+          "id": "chargingAvailability",
+          "type": "text",
+          "label": {
+            "en": "chargingAvailability ID",
+            "nl": "chargingAvailability ID"
+          },
+          "value": ""
+        },
+        {
+          "id": "search",
+          "type": "label",
+          "label": {
+            "en": "Searched address",
+            "nl": "Gezocht adres"
+          },
+          "value": ""
+        }
+      ]
+    }
+  ]
+}

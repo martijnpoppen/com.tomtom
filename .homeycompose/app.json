@@ -1,0 +1,64 @@
+{
+  "id": "com.tomtom",
+  "version": "1.4.0",
+  "compatibility": ">=5.0.0",
+  "sdk": 3,
+  "platforms": [
+    "local"
+  ],
+  "brandColor": "#000000",
+  "name": {
+    "en": "TomTom EV Service",
+    "nl": "TomTom EV Service"
+  },
+  "description": {
+    "en": "Real-time charging station availability",
+    "nl": "Beschikbaarheid van oplaadstations in real time"
+  },
+  "tags": {
+    "en": []
+  },
+  "category": [
+    "localization"
+  ],
+  "images": {
+    "large": "/assets/images/large.jpg",
+    "small": "/assets/images/small.jpg"
+  },
+  "author": {
+    "name": "Martijn Poppen",
+    "email": "tomtom@martijnpoppen.nl"
+  },
+  "contributors": {
+    "developers": [
+      {
+        "name": "Martijn Poppen",
+        "email": "tomtom@martijnpoppen.nl"
+      }
+    ],
+    "translators": [
+      {
+        "name": "🇬🇧 Martijn Poppen"
+      },
+      {
+        "name": "🇳🇱 Martijn Poppen"
+      }
+    ]
+  },
+  "contributing": {
+    "donate": {
+      "paypal": {
+        "username": "martijnpoppen"
+      },
+      "bunq": {
+        "username": "martijnpoppen"
+      }
+    }
+  },
+  "bugs": {
+    "url": "https://community.homey.app/t/app-pro-tomtom-ev-service/58383"
+  },
+  "source": "https://github.com/martijnpoppen/com.tomtom",
+  "homeyCommunityTopicId": 58383,
+  "support": "https://community.homey.app/t/app-pro-tomtom-ev-service/58383"
+}

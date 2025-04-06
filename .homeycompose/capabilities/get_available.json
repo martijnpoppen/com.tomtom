@@ -1,0 +1,12 @@
+{
+  "type": "boolean",
+  "title": {
+    "en": "Available",
+    "nl": "Beschikbaar"
+  },
+  "getable": true,
+  "setable": false,
+  "insights": false,
+  "uiComponent": null,
+  "icon": "assets/icons/check-square.svg"
+}

@@ -1,0 +1,16 @@
+{
+  "type": "number",
+  "title": {
+    "en": "Availability",
+    "nl": "Beschikbaar"
+  },
+  "getable": true,
+  "setable": false,
+  "insights": true,
+  "uiComponent": "sensor",
+  "units": {
+    "en": "Available",
+    "nl": "Vrij"
+  },
+  "icon": "assets/icons/unlock.svg"
+}

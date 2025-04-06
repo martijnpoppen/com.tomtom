@@ -1,0 +1,16 @@
+{
+  "type": "number",
+  "title": {
+    "en": "Occupied",
+    "nl": "Bezet"
+  },
+  "getable": true,
+  "setable": false,
+  "insights": true,
+  "uiComponent": "sensor",
+  "icon": "assets/icons/lock.svg",
+  "units": {
+    "en": "Occupied",
+    "nl": "Bezet"
+  }
+}

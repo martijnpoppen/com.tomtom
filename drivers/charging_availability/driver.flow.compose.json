@@ -1,0 +1,180 @@
+{
+  "triggers": [
+    {
+      "id": "trigger_AVAILABLE",
+      "title": {
+        "en": "Availability changed",
+        "nl": "Beschikbaarheid veranderd"
+      },
+      "titleFormatted": {
+        "en": "Availability has changed for [[connector]]",
+        "nl": "Beschikbaarheid is veranderd voor [[connector]]"
+      },
+      "tokens": [
+        {
+          "name": "available",
+          "type": "boolean",
+          "title": {
+            "en": "Available",
+            "nl": "Beschikbaar"
+          }
+        },
+        {
+          "name": "occupied",
+          "type": "boolean",
+          "title": {
+            "en": "Occupied",
+            "nl": "Bezet"
+          }
+        },
+        {
+          "name": "amount_available",
+          "type": "number",
+          "title": {
+            "en": "Amount available",
+            "nl": "Aantal vrij"
+          }
+        },
+        {
+          "name": "amount_occupied",
+          "type": "number",
+          "title": {
+            "en": "Amount occupied",
+            "nl": "Aantal bezet"
+          }
+        },
+        {
+          "name": "connector",
+          "type": "string",
+          "title": {
+            "en": "Connector",
+            "nl": "Aansluiting"
+          }
+        }
+      ],
+      "args": [
+        {
+          "name": "connector",
+          "type": "autocomplete",
+          "required": false,
+          "placeholder": {
+            "en": "Connector",
+            "nl": "Aansluiting"
+          }
+        }
+      ],
+      "highlight": true
+    },
+    {
+      "id": "trigger_AVAILABLE_AMOUNT",
+      "title": {
+        "en": "Availability amount changed",
+        "nl": "Beschikbaarheid hoeveelheid veranderd"
+      },
+      "titleFormatted": {
+        "en": "Availability amount has changed for [[connector]]",
+        "nl": "Beschikbaarheid hoeveelheid is veranderd voor [[connector]]"
+      },
+      "tokens": [
+        {
+          "name": "available",
+          "type": "boolean",
+          "title": {
+            "en": "Available",
+            "nl": "Beschikbaar"
+          }
+        },
+        {
+          "name": "occupied",
+          "type": "boolean",
+          "title": {
+            "en": "Occupied",
+            "nl": "Bezet"
+          }
+        },
+        {
+          "name": "amount_available",
+          "type": "number",
+          "title": {
+            "en": "Amount available",
+            "nl": "Aantal vrij"
+          }
+        },
+        {
+          "name": "amount_occupied",
+          "type": "number",
+          "title": {
+            "en": "Amount occupied",
+            "nl": "Aantal bezet"
+          }
+        },
+        {
+          "name": "connector",
+          "type": "string",
+          "title": {
+            "en": "Connector",
+            "nl": "Aansluiting"
+          }
+        }
+      ],
+      "args": [
+        {
+          "name": "connector",
+          "type": "autocomplete",
+          "required": false,
+          "placeholder": {
+            "en": "Connector",
+            "nl": "Aansluiting"
+          }
+        }
+      ],
+      "highlight": true
+    }
+  ],
+  "conditions": [
+    {
+      "id": "condition_AVAILABLE",
+      "title": {
+        "en": "is available",
+        "nl": "is vrij"
+      },
+      "titleFormatted": {
+        "en": "[[connector]] is available",
+        "nl": "[[connector]] is vrij"
+      },
+      "args": [
+        {
+          "name": "connector",
+          "type": "autocomplete",
+          "required": false,
+          "placeholder": {
+            "en": "Connector",
+            "nl": "Aansluiting"
+          }
+        }
+      ]
+    },
+    {
+      "id": "condition_OCCUPIED",
+      "title": {
+        "en": "is occupied",
+        "nl": "is bezet"
+      },
+      "titleFormatted": {
+        "en": "[[connector]] is occupied",
+        "nl": "[[connector]] is bezet"
+      },
+      "args": [
+        {
+          "name": "connector",
+          "type": "autocomplete",
+          "required": false,
+          "placeholder": {
+            "en": "Connector",
+            "nl": "Aansluiting"
+          }
+        }
+      ]
+    }
+  ]
+}
