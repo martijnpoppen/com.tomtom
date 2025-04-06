@@ -34,5 +34,8 @@
   },
   "1.4.0": {
     "en": "FIX: radius for search"
+  },
+  "1.5.0": {
+    "en": "NEW: update charging availibilty flowcard"
   }
 }

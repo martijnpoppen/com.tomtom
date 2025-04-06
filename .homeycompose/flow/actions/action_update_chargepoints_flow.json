@@ -1,0 +1,11 @@
+{
+  "id": "action_update_chargepoints_flow",
+  "title": {
+    "en": "Update charging station availability",
+    "nl": "Beschikbaarheid laadpalen updaten"
+  },
+  "titleFormatted": {
+    "en": "Update charging station availability",
+    "nl": "Beschikbaarheid laadpalen updaten"
+  }
+}
