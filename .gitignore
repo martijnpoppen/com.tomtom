@@ -2,6 +2,7 @@
 env.json
 node_modules/
 assets/.DS_Store
+package-lock.json
 
 .DS_Store
 
