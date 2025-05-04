@@ -350,6 +350,15 @@
                 "nl": "seconden"
               },
               "value": 120
+            },
+            {
+              "id": "update_time",
+              "type": "label",
+              "label": {
+                "en": "Last updated date & time",
+                "nl": "Laatst geupdate datum & tijd"
+              },
+              "value": ""
             }
           ]
         },

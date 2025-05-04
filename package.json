@@ -7,6 +7,6 @@
     "url": "https://github.com/martijnpoppen/com.tomtom"
   },
   "dependencies": {
-    "axios": "^0.21.4"
+    "axios": "^1.8.4"
   }
 }
