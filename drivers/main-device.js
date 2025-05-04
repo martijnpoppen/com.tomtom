@@ -17,7 +17,6 @@ module.exports = class mainDevice extends Homey.Device {
         }
     }
 
-    // ------------- Settings -------------
     async onSettings({ oldSettings, newSettings, changedKeys }) {
         this.homey.app.log(`[Device] ${this.getName()} - oldSettings`, oldSettings);
         this.homey.app.log(`[Device] ${this.getName()} - newSettings`, newSettings);
@@ -31,10 +30,8 @@ module.exports = class mainDevice extends Homey.Device {
         }
     }
 
-    // ------------- API -------------
     async setTomTomClient(firstCall, overrideSettings = null) {
         const settings = overrideSettings ? overrideSettings : this.getSettings();
-
         try {
             this.homey.app.log(`[Device] - ${this.getName()} => setTomTomClient Got config`, settings);
 
@@ -42,13 +39,15 @@ module.exports = class mainDevice extends Homey.Device {
 
             await this.setCapabilityValues(firstCall);
             await this.setAvailable();
+
+            await this.updateTimeSetting(); // <-- update time here
+
             await this.setCapabilityValuesInterval(settings.update_interval);
         } catch (error) {
             this.homey.app.log(`[Device] ${this.getName()} - setTomTomClient - error =>`, error);
         }
     }
 
-    // ------------- CapabilityListeners -------------
     async setCapabilityValues(checkCapabilities = false) {
         this.homey.app.log(`[Device] ${this.getName()} - setCapabilityValues`);
 
@@ -71,9 +70,6 @@ module.exports = class mainDevice extends Homey.Device {
                 const { perPowerLevel } = availability;
 
                 if (perPowerLevel && settings.connectors.includes(rename(connector.type))) {
-                    this.homey.app.log(`[Device] ${this.getName()} - ${rename(connector.type)} | ${chargingAvailability} - connector =>`, connector);
-                    this.homey.app.log(`[Device] ${this.getName()} - ${rename(connector.type)} | ${chargingAvailability} - perPowerLevel =>`, perPowerLevel);
-
                     for (let i = 0; i < perPowerLevel.length; i += 1) {
                         const current = perPowerLevel[i];
                         const { powerKW, available, occupied } = current;
@@ -115,12 +111,42 @@ module.exports = class mainDevice extends Homey.Device {
                     this.homey.app.log(`[Device] ${this.getName()} - ${rename(connector.type)} | ${chargingAvailability} - perPowerLevel => ERROR (Nothing found)`, { availability, perPowerLevel });
                 }
             }
+
+            await this.updateTimeSetting(); // <-- update time also during interval updates
+
         } catch (error) {
             this.homey.app.log(error);
         }
     }
 
-    // ------------- Intervals -------------
+    async updateTimeSetting() {
+        const currentTime = new Date();
+        const timezone = this.homey.clock.getTimezone();
+
+        const parts = new Intl.DateTimeFormat('default', {
+            day: '2-digit',
+            month: '2-digit',
+            year: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit',
+            hour12: false,
+            timeZone: timezone
+        }).formatToParts(currentTime);
+
+        const dateParts = {};
+        for (const part of parts) {
+            if (part.type !== 'literal') {
+                dateParts[part.type] = part.value;
+            }
+        }
+
+        const updateTimeString = `${dateParts.day}-${dateParts.month}-${dateParts.year}, ${dateParts.hour}:${dateParts.minute}:${dateParts.second}`;
+
+        await this.setSettings({ update_time: updateTimeString });
+        this.homey.app.log(`[Device] ${this.getName()} - update_time updated to: ${updateTimeString}`);
+    }
+
     async setCapabilityValuesInterval(update_interval) {
         try {
             const REFRESH_INTERVAL = 1000 * update_interval;
@@ -141,7 +167,6 @@ module.exports = class mainDevice extends Homey.Device {
         await this.homey.clearInterval(this.pollInterval);
     }
 
-    // ------------- Capabilities -------------
     async checkCapabilities() {
         const driverManifest = this.driver.manifest;
         const driverCapabilities = driverManifest.capabilities;
@@ -161,10 +186,6 @@ module.exports = class mainDevice extends Homey.Device {
     async updateCapabilities(driverCapabilities, deviceCapabilities) {
         this.homey.app.log(`[Device] ${this.getName()} - Add new capabilities =>`, driverCapabilities);
         try {
-            // deviceCapabilities.forEach((c) => {
-            //     this.removeCapability(c);
-            // });
-            // await sleep(2000);
             driverCapabilities.forEach((c) => {
                 this.addCapability(c);
             });
