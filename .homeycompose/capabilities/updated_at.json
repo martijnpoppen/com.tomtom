@@ -1,0 +1,13 @@
+{
+    "platforms": ["local"],
+    "type": "string",
+    "title": {
+      "en": "Last update",
+      "nl": "Laatste update"
+    },
+    "getable": true,
+    "setable": true,
+    "uiComponent": "sensor",
+    "icon": "assets/icons/updated.svg"
+  }
+  

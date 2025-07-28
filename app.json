@@ -284,7 +284,9 @@
       "platforms": [
         "local"
       ],
-      "capabilities": [],
+      "capabilities": [
+        "updated_at"
+      ],
       "name": {
         "en": "Chargepoint",
         "nl": "Laadpaal"
@@ -437,6 +439,20 @@
         "en": "Occupied",
         "nl": "Bezet"
       }
+    },
+    "updated_at": {
+      "platforms": [
+        "local"
+      ],
+      "type": "string",
+      "title": {
+        "en": "Last update",
+        "nl": "Laatste update"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "sensor",
+      "icon": "assets/icons/updated.svg"
     }
   }
 }

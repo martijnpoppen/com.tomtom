@@ -6,7 +6,9 @@
   "platforms": [
     "local"
   ],
-  "capabilities": [],
+  "capabilities": [
+    "updated_at"
+  ],
   "name": {
     "en": "Chargepoint",
     "nl": "Laadpaal"

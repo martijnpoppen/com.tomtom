@@ -1,6 +1,6 @@
 const Homey = require('homey');
 const TomTom = require('../lib/tomtom');
-const { sleep, rename, getConnector } = require('../lib/helpers');
+const { sleep, rename, getConnector, getCurrentDateTime } = require('../lib/helpers');
 
 module.exports = class mainDevice extends Homey.Device {
     async onInit() {
@@ -114,6 +114,8 @@ module.exports = class mainDevice extends Homey.Device {
                 } else {
                     this.homey.app.log(`[Device] ${this.getName()} - ${rename(connector.type)} | ${chargingAvailability} - perPowerLevel => ERROR (Nothing found)`, { availability, perPowerLevel });
                 }
+
+                await this.setCapabilityValue('updated_at', getCurrentDateTime(this.homey.clock.getTimezone()));
             }
         } catch (error) {
             this.homey.app.log(error);
