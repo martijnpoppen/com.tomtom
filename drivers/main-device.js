@@ -23,9 +23,7 @@ module.exports = class mainDevice extends Homey.Device {
         this.homey.app.log(`[Device] ${this.getName()} - newSettings`, newSettings);
 
         if (changedKeys.length) {
-            if (this.pollInterval) {
-                this.clearIntervals();
-            }
+            await this.clearIntervals();
 
             await this.setTomTomClient(false, newSettings);
         }
@@ -125,7 +123,17 @@ module.exports = class mainDevice extends Homey.Device {
     // ------------- Intervals -------------
     async setCapabilityValuesInterval(update_interval) {
         try {
-            const REFRESH_INTERVAL = 1000 * update_interval;
+            await this.clearIntervals();
+
+            const interval = Number(update_interval) || 0;
+
+            if (interval <= 0) {
+                this.homey.app.log(`[Device] ${this.getName()} - pollInterval => disabled`, update_interval);
+
+                return;
+            }
+
+            const REFRESH_INTERVAL = 1000 * interval;
 
             this.homey.app.log(`[Device] ${this.getName()} - pollInterval =>`, REFRESH_INTERVAL, update_interval);
 
@@ -140,7 +148,12 @@ module.exports = class mainDevice extends Homey.Device {
 
     async clearIntervals() {
         this.homey.app.log(`[Device] ${this.getName()} - clearIntervals`);
-        await this.homey.clearInterval(this.pollInterval);
+
+        if (this.pollInterval) {
+            await this.homey.clearInterval(this.pollInterval);
+
+            this.pollInterval = null;
+        }
     }
 
     // ------------- Capabilities -------------
