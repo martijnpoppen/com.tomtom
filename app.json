@@ -345,7 +345,11 @@
                 "en": "Update interval",
                 "nl": "Update interval"
               },
-              "min": 30,
+              "hint": {
+                "en": "How often the availability is fetched from TomTom. Set to 0 to disable automatic updates and only refresh with the 'Update charging station availability' flowcard.",
+                "nl": "Hoe vaak de beschikbaarheid bij TomTom wordt opgehaald. Zet op 0 om automatische updates uit te schakelen en alleen te verversen met de flowkaart 'Beschikbaarheid laadpalen updaten'."
+              },
+              "min": 0,
               "max": 3600,
               "units": {
                 "en": "seconds",
