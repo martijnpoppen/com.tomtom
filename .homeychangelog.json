@@ -40,5 +40,11 @@
   },
   "1.5.1": {
     "en": "NEW: update charging availibilty flowcard"
+  },
+  "1.6.0": {
+    "en": "NEW: add updated_at as a sensor indicating when data was refreshed (feature request)"
+  },
+  "1.6.1": {
+    "en": "FIX: update charging interval settings with hints and minimum value adjustment (thx to MRAJEKO)"
   }
 }
